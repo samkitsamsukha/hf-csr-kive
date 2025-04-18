@@ -103,5 +103,4 @@ const adminSchema = new mongoose.Schema({
 	events: [eventSchema],
 });
 
-export const Admin =
-	mongoose.models.Admin || mongoose.model("Admin", adminSchema);
+export const Admin = mongoose.models.Admin || mongoose.model("Admin", adminSchema);
