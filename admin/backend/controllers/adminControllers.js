@@ -1,6 +1,7 @@
 import { Admin } from "../models/adminModel.js";
 import { Employee } from "../models/employeeModel.js";
 
+// CREATE EVENT BY ADMIN
 export const createEvent = async (req, res) => {
   try {
     const { adminId, eventData } = req.body;
@@ -13,6 +14,7 @@ export const createEvent = async (req, res) => {
   }
 };
 
+// FETCH EVENTS BY ADMIN
 export const getAllEvents = async (req, res) => {
   try {
     const admin = await Admin.findOne();
@@ -22,6 +24,8 @@ export const getAllEvents = async (req, res) => {
   }
 };
 
+
+// FETCH EVENT BY ID FOR ADMINS
 export const getEventById = async (req, res) => {
   try {
     const admin = await Admin.findOne();
@@ -32,6 +36,7 @@ export const getEventById = async (req, res) => {
   }
 };
 
+// ADMIN REPORT ADDITION
 export const addEventReport = async (req, res) => {
   try {
     const { employeeId, employeeName, report, picture } = req.body;
@@ -45,6 +50,7 @@ export const addEventReport = async (req, res) => {
   }
 };
 
+// FETCH ALL EMPLOYEES
 export const getAllEmployees = async (req, res) => {
   try {
     const employees = await Employee.find();
@@ -54,6 +60,7 @@ export const getAllEmployees = async (req, res) => {
   }
 };
 
+// FETCH EMPLOYEE BY ID
 export const getEmployeeById = async (req, res) => {
   try {
     const employee = await Employee.findById(req.params.id);
@@ -63,6 +70,7 @@ export const getEmployeeById = async (req, res) => {
   }
 };
 
+// CREATE EMPLOYEE
 export const createEmployee = async(req, res) => {
     try {
         const { name, organisation, email } = req.body;
