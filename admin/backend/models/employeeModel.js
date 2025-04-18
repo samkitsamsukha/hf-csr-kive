@@ -33,11 +33,10 @@ const employeeEventSchema = new mongoose.Schema({
 			"vocational_training",
 			"environment",
 			"women_empowerment",
-			"rural_development",
+			"elderly_support",
 			"support_differently_abled",
 			"disaster_relief",
-			"art_culture_heritage",
-			"social_welfare",
+			"animal_welfare",
 		],
 		required: true,
 	},
@@ -57,9 +56,9 @@ const employeeSchema = new mongoose.Schema({
 		required: true,
 	},
 	events: [employeeEventSchema],
-    categories: {
-        type: [String]
-    }
+	categories: {
+		type: [String],
+	},
 });
 
 export const Employee =
