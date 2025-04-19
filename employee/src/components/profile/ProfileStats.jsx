@@ -34,7 +34,7 @@ const ProfileStats = ({ employee }) => {
         whileHover={{ y: -5 }}
         transition={{ duration: 0.3 }}
       >
-        <div className="text-3xl font-bold text-accent-600">{employee.categories.length}</div>
+        <div className="text-3xl font-bold text-accent-600">{employee.events.length}</div>
         <div className="text-sm font-medium text-gray-600">Categories</div>
       </motion.div>
     </div>

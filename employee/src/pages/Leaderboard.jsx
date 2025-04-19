@@ -6,11 +6,15 @@ const Leaderboard = () => {
   const [leaders, setLeaders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const getCoinCount = (events) => {
+    return events.reduce((total, event) => total + event.eventCoins, 0);
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get("http://localhost:4000/api/admin/employees");
-        const sorted = res.data.sort((a, b) => b.totalCoins - a.totalCoins);
+        const sorted = res.data.sort((a, b) => getCoinCount(b.events) - getCoinCount(a.events));
         setLeaders(sorted);
         setIsLoading(false);
       } catch (error) {
@@ -28,9 +32,6 @@ const Leaderboard = () => {
       .join('');
   };
 
-  const getCoinCount = (events) => {
-    return events.reduce((total, event) => total + event.eventCoins, 0);
-  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
