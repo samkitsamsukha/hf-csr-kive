@@ -1,12 +1,12 @@
-import education from '../../../../assets/badges/education.png'
-import healthcare from '../../../../assets/badges/healthcare.png'
-import vocational_training from '../../../../assets/badges/vocational_training.png'
-import environment from '../../../../assets/badges/environment.png'
-import women_empowerment from '../../../../assets/badges/women_empowerment.png'
-import elderly_support from '../../../../assets/badges/elderly_support.png'
-import support_differently_abled from '../../../../assets/badges/support_differently_abled.png'
-import disaster_relief from '../../../../assets/badges/disaster_relief.png'
-import animal_welfare from '../../../../assets/badges/animal_welfare.png'
+import education from '../../../../assets/profile_badges/education.png'
+import healthcare from '../../../../assets/profile_badges/healthcare.png'
+import vocational_training from '../../../../assets/profile_badges/vocational_training.png'
+import environment from '../../../../assets/profile_badges/environment.png'
+import women_empowerment from '../../../../assets/profile_badges/women_empowerment.png'
+import elderly_support from '../../../../assets/profile_badges/elderly_support.png'
+import support_differently_abled from '../../../../assets/profile_badges/support_differently_abled.png'
+import disaster_relief from '../../../../assets/profile_badges/disaster_relief.png'
+import animal_welfare from '../../../../assets/profile_badges/animal_welfare.png'
 
 function CategoryBadge({ category }) {
   const categoryMap = {
