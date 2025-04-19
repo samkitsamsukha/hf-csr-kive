@@ -146,7 +146,7 @@ function CreateEvent() {
 								name="eventName"
 								value={formData.eventName}
 								onChange={handleChange}
-								className={`w-full px-4 py-2 rounded-md border transition focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white bg-white ${
+								className={`w-full px-4 py-2 rounded-md border transition focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white ${
 									errors.eventName ? "border-red-500" : "border-gray-300"
 								}`}
 								placeholder="Enter event name"

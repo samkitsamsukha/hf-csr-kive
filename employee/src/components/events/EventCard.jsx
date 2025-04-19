@@ -27,7 +27,7 @@ const EventCard = ({ event }) => {
       return url;
     }
   };
-  // Convert category ID to display name
+
   const getCategoryName = (categoryId) => {
     return categoryId.split('_').map(word => 
       word.charAt(0).toUpperCase() + word.slice(1)
@@ -100,6 +100,7 @@ const EventCard = ({ event }) => {
     </motion.div>
   );
 };
+
 EventCard.propTypes = {
   event: PropTypes.shape({
     _id: PropTypes.string.isRequired,

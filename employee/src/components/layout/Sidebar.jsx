@@ -1,5 +1,4 @@
 import { NavLink, Link } from 'react-router-dom';
-import { companyInfo } from '../../data/mockData';
 import { motion } from 'framer-motion';
 
 // Animation variants for sidebar links
@@ -8,21 +7,19 @@ const itemVariants = {
   visible: { opacity: 1, x: 0 }
 };
 
-const Sidebar = ({ mobile = false }) => {
+const Sidebar = () => {
   return (
     <div className="h-full flex flex-col">
-      {/* Logo */}
       <div className="flex items-center justify-center h-16 flex-shrink-0 px-4 bg-white">
-        <Link to="/">
+        <Link to="/" className='flex justify-center items-center space-x-2'>
           <img
             className="h-8 w-auto"
-            src={companyInfo.logoUrl}
-            alt={companyInfo.name}
+            src={"https://raw.githubusercontent.com/samkitsamsukha/csr-kive/main/assets/logo.png"}
+            alt={"Silverman Sachs Logo"}
           />
+          <p className='text-xl font-semibold'>Silverman Sachs</p>
         </Link>
       </div>
-      
-      {/* Navigation */}
       <motion.div 
         className="flex-1 flex flex-col mt-5 overflow-y-auto"
         initial="hidden"
@@ -34,9 +31,9 @@ const Sidebar = ({ mobile = false }) => {
             <NavLink
               to="/"
               className={({ isActive }) =>
-                `group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
+                `group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
                   isActive
-                    ? 'bg-primary-50 text-primary-600'
+                    ? 'bg-gray-200 text-black font-semibold'
                     : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                 }`
               }
@@ -63,9 +60,9 @@ const Sidebar = ({ mobile = false }) => {
             <NavLink
               to="/events"
               className={({ isActive }) =>
-                `group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
+                `group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
                   isActive
-                    ? 'bg-primary-50 text-primary-600'
+                    ? 'bg-gray-200 text-black font-semibold'
                     : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                 }`
               }
@@ -92,9 +89,9 @@ const Sidebar = ({ mobile = false }) => {
             <NavLink
               to="/profile"
               className={({ isActive }) =>
-                `group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
+                `group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
                   isActive
-                    ? 'bg-primary-50 text-primary-600'
+                    ? 'bg-gray-200 text-black font-semibold'
                     : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                 }`
               }
@@ -121,9 +118,9 @@ const Sidebar = ({ mobile = false }) => {
             <NavLink
               to="/leaderboard"
               className={({ isActive }) =>
-                `group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
+                `group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
                   isActive
-                    ? 'bg-primary-50 text-primary-600'
+                    ? 'bg-gray-200 text-black font-semibold'
                     : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                 }`
               }
@@ -148,23 +145,20 @@ const Sidebar = ({ mobile = false }) => {
         </nav>
       </motion.div>
       
-      {/* Bottom section */}
       <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
         <div className="flex-shrink-0 group block">
           <div className="flex items-center">
             <div>
-              <img
-                className="inline-block h-9 w-9 rounded-full"
-                src="https://randomuser.me/api/portraits/men/1.jpg"
-                alt="User profile"
-              />
+              <div className='w-12 h-12 rounded-full bg-black text-white font-semibold flex justify-center items-center text-xl'>
+                SS
+              </div>
             </div>
             <div className="ml-3">
               <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">
-                John Doe
+                Samkit Samsukha
               </p>
               <p className="text-xs font-medium text-gray-500 group-hover:text-gray-700">
-                850 Impact Coins
+                samkitsamsukha@gmail.com
               </p>
             </div>
           </div>
@@ -172,6 +166,12 @@ const Sidebar = ({ mobile = false }) => {
       </div>
     </div>
   );
+};
+
+import PropTypes from 'prop-types';
+
+Sidebar.propTypes = {
+  mobile: PropTypes.bool,
 };
 
 export default Sidebar;

@@ -132,8 +132,7 @@ const EventDetail = () => {
         </svg>
         Back to Events
       </Link>
-      
-      {/* Event header */}
+    
       <div className="relative rounded-lg overflow-hidden mb-6">
         <div className="absolute inset-0">
           <img 
@@ -171,10 +170,9 @@ const EventDetail = () => {
           </motion.div>
         </div>
       </div>
-      
-      {/* Event details */}
+   
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Main content */}
+       
         <div className="lg:col-span-2">
           <motion.div 
             className="bg-white rounded-lg shadow overflow-hidden"
@@ -197,7 +195,7 @@ const EventDetail = () => {
             </div>
           </motion.div>
           
-          {/* Participants section */}
+    
           <motion.div 
             className="mt-8 bg-white rounded-lg shadow overflow-hidden"
             initial={{ opacity: 0, y: 20 }}
@@ -233,14 +231,12 @@ const EventDetail = () => {
           </motion.div>
         </div>
         
-        {/* Sidebar */}
         <motion.div 
           className="space-y-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          {/* Event information */}
           <div className="bg-white rounded-lg shadow overflow-hidden">
             <div className="px-6 py-5 border-b border-gray-200">
               <h2 className="text-xl font-semibold text-gray-900">Event Information</h2>
@@ -294,7 +290,7 @@ const EventDetail = () => {
                 </>
               ) : hasSubmitted ? (
                 <>
-                  <h3 className="text-lg font-medium text-success-600 mb-3">You've participated!</h3>
+                  <h3 className="text-lg font-medium text-success-600 mb-3">You have participated!</h3>
                   <p className="text-sm text-gray-600 mb-4">
                     Thank you for your contribution. You have earned {event.eventCoins} Impact Coins.
                   </p>

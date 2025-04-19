@@ -19,7 +19,9 @@ const ProfileEvents = ({ events }) => {
 				const parts = url.replace(githubPrefix, "").split("/");
 				if (parts.length >= 5 && parts[2] === "blob") {
 					const [username, repo, , branch, ...pathParts] = parts;
-					return `${rawPrefix}${username}/${repo}/${branch}/${pathParts.join("/")}`;
+					return `${rawPrefix}${username}/${repo}/${branch}/${pathParts.join(
+						"/"
+					)}`;
 				}
 			}
 			return url;
@@ -78,7 +80,8 @@ const ProfileEvents = ({ events }) => {
 												Category: {getCategoryName(event.eventCategory)}
 											</div>
 											<div className="text-xs text-gray-500 mt-1">
-												Report: {firstSubmission?.eventReport || "No report submitted"}
+												Report:{" "}
+												{firstSubmission?.eventReport || "No report submitted"}
 											</div>
 										</div>
 										<div>

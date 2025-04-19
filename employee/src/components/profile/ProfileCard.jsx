@@ -11,15 +11,15 @@ const ProfileCard = ({ employee }) => {
 
   return (
     <div className="bg-white shadow rounded-lg overflow-hidden">
-      <div className="bg-gradient-to-r from-primary-300 to-secondary-300 p-4">
+      <div className="bg-black p-4">
       <div className="px-4 sm:px-6">
         <div className="flex flex-row items-center">
           <div className='bg-white font-semibold rounded-full border-4 border-white shadow-lg flex justify-center items-center w-20 h-20 text-4xl'>
             SS
           </div>
           <div className="ml-4 flex flex-col justify-center">
-            <h2 className="text-2xl font-bold text-gray-900">{employee.name}</h2>
-            <p className="text-gray-600">{employee.organisation}</p>
+            <h2 className="text-2xl font-bold text-white">{employee.name}</h2>
+            <p className="text-gray-100">{employee.organisation}</p>
           </div>
         </div>
       </div>
@@ -43,7 +43,7 @@ const ProfileCard = ({ employee }) => {
           </div>
           
           <div className="sm:col-span-2">
-            <dt className="text-sm font-medium text-gray-500">Interest Categories</dt>
+            <dt className="text-sm font-medium text-gray-500">Badges Earned</dt>
             <dd className="mt-1 text-sm text-gray-900">
               <div className="flex flex-wrap gap-2">
                 {employee.events && employee.events.length > 0 ? (

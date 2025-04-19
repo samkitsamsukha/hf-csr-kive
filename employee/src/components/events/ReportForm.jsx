@@ -36,8 +36,7 @@ const ReportForm = ({ event, onSubmit, onClose }) => {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    // Validate form
+
     const newErrors = {};
     if (!formData.report.trim()) {
       newErrors.report = 'Report is required';
@@ -63,7 +62,6 @@ const ReportForm = ({ event, onSubmit, onClose }) => {
     };
   
     try {
-      // Admin submission
       await fetch(`http://localhost:4000/api/admin/events/${event._id}/submit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -76,22 +74,21 @@ const ReportForm = ({ event, onSubmit, onClose }) => {
       });
       
       console.log("payload for employee sub", payload)
-      // Employee submission
+
       await fetch(`http://localhost:4000/api/employee/events/${event._id}/submit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
   
-      // Optionally show success message
+
       alert("Report submitted successfully!");
   
-      // Reset form
+  
       setFormData({ report: '', picture: '' });
       setImagePreview('');
-      onClose(); // Close the modal
+      onClose(); 
   
-      // Optionally notify parent component
       if (onSubmit) onSubmit(payload);
   
     } catch (error) {
@@ -100,8 +97,6 @@ const ReportForm = ({ event, onSubmit, onClose }) => {
     }
   };
   
-  
-  // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -109,7 +104,6 @@ const ReportForm = ({ event, onSubmit, onClose }) => {
       [name]: value,
     });
     
-    // Clear error for this field
     if (errors[name]) {
       setErrors({
         ...errors,
@@ -117,7 +111,7 @@ const ReportForm = ({ event, onSubmit, onClose }) => {
       });
     }
     
-    // Update image preview
+  
     if (name === 'picture' && value) {
       setImagePreview(value);
     }
@@ -221,6 +215,7 @@ const ReportForm = ({ event, onSubmit, onClose }) => {
     </AnimatePresence>
   );
 };
+
 ReportForm.propTypes = {
   event: PropTypes.shape({
     _id: PropTypes.string.isRequired,

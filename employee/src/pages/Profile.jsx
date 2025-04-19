@@ -14,7 +14,7 @@ const Profile = () => {
 
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://localhost:4000/api/admin/employees/6802665e09c6db38baa6739b");
+        const res = await axios.get("http://localhost:4000/api/admin/employees/6803da26bf873e1982ad9f1e");
         setEmployee(res.data);
         console.log(res.data);
         setIsLoading(false);

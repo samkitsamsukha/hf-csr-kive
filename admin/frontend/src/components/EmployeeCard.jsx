@@ -1,8 +1,14 @@
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 function EmployeeCard({ employee }) {
   const { _id, name, organisation, email, events } = employee
-  
+  const getInitials = (name) => {
+    return name
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase())
+      .join('');
+  };
   // Calculate total coins earned by summing up eventCoins from all events
   const totalCoins = events ? events.reduce((sum, event) => sum + event.eventCoins, 0) : 0
   
@@ -13,8 +19,8 @@ function EmployeeCard({ employee }) {
     >
       <div className="card p-5 hover:translate-y-[-4px]">
         <div className="flex items-center space-x-4">
-          <div className="h-14 w-14 rounded-full bg-primary-100 flex items-center justify-center text-primary-800 font-bold text-xl">
-            {name.charAt(0).toUpperCase()}
+          <div className="h-14 w-14 rounded-full bg-black flex items-center justify-center text-white font-bold text-xl">
+            {getInitials(name)}
           </div>
           <div className="flex-1 min-w-0">
             <h3 className="text-lg font-semibold text-gray-900 truncate">{name}</h3>
@@ -37,5 +43,18 @@ function EmployeeCard({ employee }) {
     </Link>
   )
 }
+EmployeeCard.propTypes = {
+  employee: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    organisation: PropTypes.string,
+    email: PropTypes.string,
+    events: PropTypes.arrayOf(
+      PropTypes.shape({
+        eventCoins: PropTypes.number
+      })
+    )
+  }).isRequired
+};
 
 export default EmployeeCard

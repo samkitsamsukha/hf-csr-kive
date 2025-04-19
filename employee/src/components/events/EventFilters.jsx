@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { EVENT_CATEGORIES } from '../../data/mockData';
 import { motion } from 'framer-motion';
 
@@ -7,7 +8,6 @@ const EventFilters = ({ onFilterChange }) => {
   const [timeFilter, setTimeFilter] = useState('all');
   const [expanded, setExpanded] = useState(false);
   
-  // Update parent component when filters change
   useEffect(() => {
     onFilterChange({
       category: selectedCategory === 'all' ? null : selectedCategory,
@@ -101,6 +101,9 @@ const EventFilters = ({ onFilterChange }) => {
       </div>
     </div>
   );
+};
+EventFilters.propTypes = {
+  onFilterChange: PropTypes.func.isRequired,
 };
 
 export default EventFilters;

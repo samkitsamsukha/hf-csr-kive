@@ -44,18 +44,15 @@ const AppLayout = () => {
         </motion.div>
         
         <div className="flex-shrink-0 w-14" aria-hidden="true">
-          {/* Dummy element to force sidebar to shrink to fit close icon */}
         </div>
       </div>
 
-      {/* Static sidebar for desktop */}
       <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
         <div className="flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-white">
           <Sidebar />
         </div>
       </div>
 
-      {/* Main content */}
       <div className="md:pl-64 flex flex-col flex-1">
         <Header toggleSidebar={toggleSidebar} />
         <main className="flex-1 overflow-y-auto bg-gray-50">
