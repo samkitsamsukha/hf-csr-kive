@@ -81,3 +81,33 @@ export const createEmployee = async(req, res) => {
         res.status(500).json({ error: err.message });
     }
 }
+
+export const getSubmissionById = async (req, res) => {
+  try {
+      const { submissionId } = req.params;
+
+      // Fetch the admin that contains the events with submissions
+      const admin = await Admin.findOne({ 'events.submissions._id': submissionId });
+      
+      if (!admin) {
+          return res.status(404).json({ message: "Admin or Submission not found" });
+      }
+
+      // Loop through the events and find the submission by ID
+      let submission = null;
+      for (const event of admin.events) {
+          submission = event.submissions.id(submissionId);
+          if (submission) {
+              break;  // Exit loop once we find the submission
+          }
+      }
+
+      if (!submission) {
+          return res.status(404).json({ message: "Submission not found" });
+      }
+
+      res.status(200).json(submission);  // Respond with the found submission
+  } catch (err) {
+      res.status(500).json({ error: err.message });
+  }
+};
