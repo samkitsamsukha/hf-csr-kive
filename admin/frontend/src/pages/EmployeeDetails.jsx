@@ -50,19 +50,17 @@ function EmployeeDetails() {
   }
 
   if (!employee) return null
-
-  // Calculate total coins earned
   const totalCoins = employee.events.reduce((sum, event) => sum + event.eventCoins, 0)
 
   return (
     <div className="animate-fade-in">
-      {/* Back link */}
+      
       <Link to="/employees" className="inline-flex items-center text-primary-700 hover:text-primary-800 mb-6">
         ← Back to Employees
       </Link>
       
       <div className="">
-        {/* Employee details section */}
+        
         <div className='flex flex-row gap-12'>
           <div className="bg-white rounded-lg shadow-card overflow-hidden mb-6">
             <div className="p-6">

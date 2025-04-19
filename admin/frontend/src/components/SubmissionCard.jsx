@@ -14,7 +14,7 @@ function SubmissionCard({ submission }) {
           )}`;
         }
       }
-      return url; // Return the original URL if it's not a valid GitHub link
+      return url;
     } catch (error) {
       console.error("Error converting GitHub URL:", error);
       return url;

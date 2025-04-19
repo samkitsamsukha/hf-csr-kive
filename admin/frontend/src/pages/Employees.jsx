@@ -43,7 +43,6 @@ function Employees() {
 				</p>
 			</div>
 
-			{/* Search bar */}
 			<div className="flex flex-row gap-12">
 				<div className="w-1/2">
 					<div className="mb-6">

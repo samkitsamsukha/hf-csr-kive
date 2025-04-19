@@ -32,7 +32,7 @@ function Sidebar({ isOpen, isMobile, closeSidebar }) {
           )}`;
         }
       }
-      return url; // Return the original URL if it's not a valid GitHub link
+      return url;
     } catch (error) {
       console.error("Error converting GitHub URL:", error);
       return url;
@@ -62,15 +62,13 @@ function Sidebar({ isOpen, isMobile, closeSidebar }) {
 
   return (
     <>
-      {/* Backdrop for mobile */}
+      
       {isOpen && isMobile && (
         <div 
           className="fixed inset-0 bg-black bg-opacity-50 z-20"
           onClick={closeSidebar}
         />
       )}
-
-      {/* Sidebar */}
       <aside 
         className={`
           ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
@@ -79,7 +77,6 @@ function Sidebar({ isOpen, isMobile, closeSidebar }) {
           flex flex-col border-r border-gray-300
         `}
       >
-        {/* Logo and close button (mobile only) */}
         <div className="p-4 flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <span className="font-bold text-xl tracking-wide">CSR-Kive</span>
@@ -91,7 +88,6 @@ function Sidebar({ isOpen, isMobile, closeSidebar }) {
           )}
         </div>
 
-        {/* Navigation */}
         <nav className="mt-6 flex-1">
           <ul className="space-y-1 px-2">
             {navigationItems.map((item) => (
@@ -114,7 +110,6 @@ function Sidebar({ isOpen, isMobile, closeSidebar }) {
           </ul>
         </nav>
 
-        {/* Footer */}
         <div className="p-4 border-t border-gray-300">
           {data && <div className="text-sm text-black flex flex-col justify-center gap-3">
             <div className='flex items-center  gap-3'>

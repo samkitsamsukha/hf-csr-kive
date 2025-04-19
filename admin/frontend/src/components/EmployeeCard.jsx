@@ -9,7 +9,8 @@ function EmployeeCard({ employee }) {
       .map(word => word.charAt(0).toUpperCase())
       .join('');
   };
-  // Calculate total coins earned by summing up eventCoins from all events
+
+
   const totalCoins = events ? events.reduce((sum, event) => sum + event.eventCoins, 0) : 0
   
   return (

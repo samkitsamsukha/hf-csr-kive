@@ -41,7 +41,6 @@ function CreateEvent() {
 			...prev,
 			[name]: value,
 		}));
-		// Clear error when field is being edited
 		if (errors[name]) {
 			setErrors((prev) => ({ ...prev, [name]: null }));
 		}
@@ -83,11 +82,11 @@ function CreateEvent() {
 
 		try {
 			const payload = {
-				adminId: "6803cf5bf2d0c69d7f86622e", // ✅ hardcoded admin ID
+				adminId: "6803cf5bf2d0c69d7f86622e",
 				eventData: {
 					...formData,
 					eventDate:
-						formData.eventDate?.toISOString() || new Date().toISOString(), // ✅ make sure it's a valid ISO date string
+						formData.eventDate?.toISOString() || new Date().toISOString(),
 				},
 			};
 
@@ -132,7 +131,6 @@ function CreateEvent() {
 			<div className="bg-white rounded-2xl shadow-md p-8">
 				<form onSubmit={handleSubmit}>
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-						{/* Event Name */}
 						<div>
 							<label
 								htmlFor="eventName"
@@ -155,8 +153,6 @@ function CreateEvent() {
 								<p className="mt-1 text-red-500 text-sm">{errors.eventName}</p>
 							)}
 						</div>
-
-						{/* Event Date */}
 						<div>
 							<label
 								htmlFor="eventDate"
@@ -177,8 +173,6 @@ function CreateEvent() {
 								<p className="mt-1 text-red-500 text-sm">{errors.eventDate}</p>
 							)}
 						</div>
-
-						{/* Event Location */}
 						<div>
 							<label
 								htmlFor="eventLocation"
@@ -203,8 +197,6 @@ function CreateEvent() {
 								</p>
 							)}
 						</div>
-
-						{/* Event Category */}
 						<div>
 							<label
 								htmlFor="eventCategory"
@@ -233,8 +225,6 @@ function CreateEvent() {
 								</p>
 							)}
 						</div>
-
-						{/* Event Coins */}
 						<div>
 							<label
 								htmlFor="eventCoins"
@@ -256,8 +246,6 @@ function CreateEvent() {
 								Coins awarded to participants
 							</p>
 						</div>
-
-						{/* Event Image */}
 						<div>
 							<label
 								htmlFor="eventImage"
@@ -281,7 +269,6 @@ function CreateEvent() {
 							)}
 						</div>
 
-						{/* Description */}
 						<div className="md:col-span-2">
 							<label
 								htmlFor="eventDescription"
@@ -306,8 +293,6 @@ function CreateEvent() {
 								</p>
 							)}
 						</div>
-
-						{/* Summary */}
 						<div className="md:col-span-2">
 							<label
 								htmlFor="eventSummary"
@@ -334,14 +319,12 @@ function CreateEvent() {
 						</div>
 					</div>
 
-					{/* Submit Error */}
 					{errors.submit && (
 						<div className="mt-6 p-3 bg-red-100 text-red-700 rounded-md">
 							{errors.submit}
 						</div>
 					)}
 
-					{/* Buttons */}
 					<div className="mt-8 flex justify-end space-x-4">
 						<button
 							type="button"

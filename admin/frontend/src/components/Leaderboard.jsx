@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 
 function Leaderboard({ employees }) {
-  // Sort employees by total coins in descending order
   const sortedEmployees = [...employees].sort((a, b) => {
     const aCoins = a.events.reduce((sum, event) => sum + event.eventCoins, 0)
     const bCoins = b.events.reduce((sum, event) => sum + event.eventCoins, 0)
