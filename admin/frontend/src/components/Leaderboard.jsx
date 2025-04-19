@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 function Leaderboard({ employees }) {
   // Sort employees by total coins in descending order
   const sortedEmployees = [...employees].sort((a, b) => {
@@ -52,5 +54,20 @@ function Leaderboard({ employees }) {
     </div>
   )
 }
+
+Leaderboard.propTypes = {
+  employees: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      organisation: PropTypes.string.isRequired,
+      events: PropTypes.arrayOf(
+        PropTypes.shape({
+          eventCoins: PropTypes.number.isRequired,
+        })
+      ).isRequired,
+    })
+  ).isRequired,
+};
 
 export default Leaderboard

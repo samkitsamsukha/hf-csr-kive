@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import EmployeeCard from "../components/EmployeeCard";
-import { mockEmployees } from "../data/mockData";
 import axios from "axios";
 import Leaderboard from "../components/Leaderboard";
 

@@ -8,6 +8,8 @@ import support_differently_abled from '../../../../assets/text_badges/support_di
 import disaster_relief from '../../../../assets/text_badges/disaster_relief.png'
 import animal_welfare from '../../../../assets/text_badges/animal_welfare.png'
 
+import PropTypes from 'prop-types';
+
 function CategoryBadge({ category }) {
   const categoryMap = {
     education: { image: education },
@@ -39,5 +41,9 @@ function CategoryBadge({ category }) {
     </span>
   )
 }
+
+CategoryBadge.propTypes = {
+  category: PropTypes.string.isRequired,
+};
 
 export default CategoryBadge

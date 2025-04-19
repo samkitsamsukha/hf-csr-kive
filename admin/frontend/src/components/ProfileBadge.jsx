@@ -7,6 +7,7 @@ import elderly_support from '../../../../assets/profile_badges/elderly_support.p
 import support_differently_abled from '../../../../assets/profile_badges/support_differently_abled.png'
 import disaster_relief from '../../../../assets/profile_badges/disaster_relief.png'
 import animal_welfare from '../../../../assets/profile_badges/animal_welfare.png'
+import PropTypes from 'prop-types'
 
 function ProfileBadge({ category }) {
   const categoryMap = {
@@ -38,6 +39,9 @@ function ProfileBadge({ category }) {
       )}
     </span>
   )
+}
+ProfileBadge.propTypes = {
+  category: PropTypes.string.isRequired,
 }
 
 export default ProfileBadge

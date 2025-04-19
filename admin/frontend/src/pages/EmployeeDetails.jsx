@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { format } from 'date-fns'
 import CategoryBadge from '../components/CategoryBadge'
-import Leaderboard from '../components/Leaderboard'
-import { mockEmployees } from '../data/mockData'
 import axios from 'axios'
 import ProfileBadge from '../components/ProfileBadge'
 
