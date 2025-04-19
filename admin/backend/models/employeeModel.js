@@ -40,6 +40,17 @@ const employeeEventSchema = new mongoose.Schema({
 		],
 		required: true,
 	},
+	submissions: [
+		{
+			// Change this from 'submission' to 'submissions' and make it an array.
+			eventReport: {
+				type: String,
+			},
+			picture: {
+				type: String,
+			},
+		},
+	],
 });
 
 const employeeSchema = new mongoose.Schema({
@@ -61,4 +72,5 @@ const employeeSchema = new mongoose.Schema({
 	},
 });
 
-export const Employee = mongoose.models.Employee || mongoose.model("Employee", employeeSchema);
+export const Employee =
+	mongoose.models.Employee || mongoose.model("Employee", employeeSchema);

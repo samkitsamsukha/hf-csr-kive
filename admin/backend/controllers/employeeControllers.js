@@ -47,6 +47,12 @@ export const submitEventReport = async (req, res) => {
 				eventLocation: event.eventLocation,
 				eventCoins: event.eventCoins,
 				eventCategory: event.eventCategory,
+				submissions: [
+					{
+						eventReport: report,
+						picture: picture,
+					},
+				],
 			});
 		}
 
