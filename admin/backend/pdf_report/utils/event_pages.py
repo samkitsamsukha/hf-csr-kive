@@ -22,10 +22,30 @@ def build_event_pages(events):
         
         table = Table(table_data, colWidths=[1.8*inch, 4.5*inch])
         table.setStyle(TableStyle([
-            ("FONT", (0,0), (-1,-1), "Times-Roman", 12),
-            ("VALIGN", (0,0), (-1,-1), "TOP"),
-            ("BOTTOMPADDING", (0,0), (-1,-1), 6),
+            # Grid and borders
+            ('GRID', (0, 0), (-1, -1), 1, colors.black),
+            ('BACKGROUND', (0, 0), (0, -1), colors.lightgrey),
+            
+            # Font styles
+            ('FONTNAME', (0, 0), (0, -1), 'Times-Bold'),
+            ('FONTNAME', (1, 0), (1, -1), 'Times-Roman'),
+            ('FONTSIZE', (0, 0), (-1, -1), 11),
+            
+            # Alignment
+            ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+            ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+            
+            # Padding
+            ('LEFTPADDING', (0, 0), (-1, -1), 6),
+            ('RIGHTPADDING', (0, 0), (-1, -1), 6),
+            ('TOPPADDING', (0, 0), (-1, -1), 4),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
+            
+            # Text color
+            ('TEXTCOLOR', (0, 0), (0, -1), colors.black),
+            ('TEXTCOLOR', (1, 0), (1, -1), colors.black),
         ]))
+        
         event_story.append(table)
         event_story.append(Spacer(1, 24))
 
