@@ -1,5 +1,4 @@
 import { format } from "date-fns";
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { EVENT_CATEGORIES } from "../../data/mockData";
 import PropTypes from "prop-types";
@@ -53,7 +52,7 @@ const ProfileEvents = ({ events }) => {
 								animate={{ opacity: 1, y: 0 }}
 								transition={{ delay: index * 0.1 }}
 							>
-								<Link to={`/events/${event._id}`} className="block">
+								<div className="block">
 									<div className="flex items-center">
 										<div className="flex-shrink-0 h-auto w-64 rounded-md overflow-hidden">
 											{firstSubmission?.picture ? (
@@ -85,7 +84,7 @@ const ProfileEvents = ({ events }) => {
 											</div>
 										</div>
 									</div>
-								</Link>
+								</div>
 							</motion.div>
 						);
 					})
