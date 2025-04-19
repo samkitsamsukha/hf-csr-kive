@@ -55,7 +55,7 @@ const ProfileEvents = ({ events }) => {
 							>
 								<Link to={`/events/${event._id}`} className="block">
 									<div className="flex items-center">
-										<div className="flex-shrink-0 h-12 w-12 rounded-md overflow-hidden">
+										<div className="flex-shrink-0 h-auto w-64 rounded-md overflow-hidden">
 											{firstSubmission?.picture ? (
 												<img
 													src={convertToRawGitHubURL(firstSubmission.picture)}
@@ -83,11 +83,6 @@ const ProfileEvents = ({ events }) => {
 												Report:{" "}
 												{firstSubmission?.eventReport || "No report submitted"}
 											</div>
-										</div>
-										<div>
-											<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800">
-												{event.eventCoins} coins
-											</span>
 										</div>
 									</div>
 								</Link>

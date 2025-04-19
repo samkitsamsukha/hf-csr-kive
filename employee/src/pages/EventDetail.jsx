@@ -209,17 +209,17 @@ const EventDetail = () => {
               {event.submissions.length > 0 ? (
                 <div className="space-y-6">
                   {event.submissions.map((submission) => (
-                    <div key={submission.id} className="flex">
+                    <div key={submission.id} className="flex justify-center items-center gap-4">
                       <div className="mr-4 flex-shrink-0">
                         <img 
-                          src={submission.picture} 
+                          src={convertToRawGitHubURL(submission.picture)} 
                           alt={submission.employeeName} 
-                          className="h-16 w-16 object-cover rounded-lg"
+                          className="h-auto w-64 object-cover rounded-lg"
                         />
                       </div>
                       <div>
-                        <h4 className="text-lg font-medium text-gray-900">{submission.employeeName}</h4>
-                        <p className="mt-1 text-gray-700 line-clamp-3">{submission.report}</p>
+                        <h4 className="text-lg font-semibold text-gray-900">{submission.employeeName}</h4>
+                        <p className="mt-1 text-gray-700">{submission.report}</p>
                       </div>
                     </div>
                   ))}
@@ -265,7 +265,7 @@ const EventDetail = () => {
                 </div>
                 <div className="py-3 flex justify-between">
                   <dt className="text-sm font-medium text-gray-500">Participants</dt>
-                  <dd className="text-sm text-gray-900">{event.participants}</dd>
+                  <dd className="text-sm text-gray-900">{event.submissions.length}</dd>
                 </div>
               </dl>
             </div>

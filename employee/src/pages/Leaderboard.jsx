@@ -29,7 +29,7 @@ const Leaderboard = () => {
   };
 
   const getCoinCount = (events) => {
-    return events.reduce((total, event) => total + event.coins, 0);
+    return events.reduce((total, event) => total + event.eventCoins, 0);
   }
 
   return (
@@ -81,7 +81,7 @@ const Leaderboard = () => {
                       </div>
                     </div>
                     <span className="text-lg font-semibold text-gray-900">{leaders[1].name}</span>
-                    <span className="text-gray-600">{leaders[1].totalCoins} Coins</span>
+                    <span className="text-gray-600">{getCoinCount(leaders[1].events)} Coins</span>
                   </motion.div>
                 )}
                 
@@ -105,7 +105,7 @@ const Leaderboard = () => {
                     </div>
                   </div>
                   <span className="text-xl font-bold text-gray-900">{leaders[0].name}</span>
-                  <span className="text-gray-600 font-semibold">{leaders[0].totalCoins} Coins</span>
+                  <span className="text-gray-600 font-semibold">{getCoinCount(leaders[0].events)} Coins</span>
                 </motion.div>
                 
                 {leaders.length > 2 && (
@@ -124,7 +124,7 @@ const Leaderboard = () => {
                       </div>
                     </div>
                     <span className="text-lg font-semibold text-gray-900">{leaders[2].name}</span>
-                    <span className="text-gray-600">{leaders[2].totalCoins} Coins</span>
+                    <span className="text-gray-600">{getCoinCount(leaders[2].events)} Coins</span>
                   </motion.div>
                 )}
               </div>
