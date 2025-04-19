@@ -12,14 +12,14 @@ dotenv.config();
 connectDb();
 app.use(express.json());
 
+app.use(cors({
+    origin: "*",
+}));
+
 app.use("/api/admin", adminRoutes);
 app.use("/api/employee", employeeRoutes);
 
 initializeAdmin();
 
-app.use(cors({
-    origin: "*",
-}));
-
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 4000;
 app.listen(port, ()=> console.log(`Server running on port ${port}`));

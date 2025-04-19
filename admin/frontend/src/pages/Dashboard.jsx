@@ -1,38 +1,30 @@
 import { useState, useEffect } from 'react'
 import EventCard from '../components/EventCard'
-import { mockEvents } from '../data/mockData'
+import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 function Dashboard() {
   const [events, setEvents] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [activeFilter, setActiveFilter] = useState('all')
 
-  // In a real app, this would fetch from an API
   useEffect(() => {
-    // Simulate API fetch
-    setTimeout(() => {
+    const fetchEvents = async () => {
       try {
-        setEvents(mockEvents)
-        setLoading(false)
+        const res = await axios.get('http://localhost:4000/api/admin/events');
+        setEvents(res.data);
+        setLoading(false);
+        console.log(res.data)
       } catch (err) {
-        setError('Failed to load events')
-        setLoading(false)
+        setError('Failed to load events');
+        setLoading(false);
+        console.error(err);
+        console.log('Error fetching events:', err);
       }
-    }, 800)
-  }, [])
-
-  const filterOptions = [
-    { id: 'all', label: 'All Events' },
-    { id: 'education', label: 'Education' },
-    { id: 'healthcare', label: 'Healthcare' },
-    { id: 'environment', label: 'Environment' },
-    { id: 'women_empowerment', label: 'Women Empowerment' },
-  ]
-
-  const filteredEvents = activeFilter === 'all' 
-    ? events 
-    : events.filter(event => event.eventCategory === activeFilter)
+    };
+  
+    fetchEvents();
+  }, []);
 
   return (
     <div>
@@ -40,25 +32,6 @@ function Dashboard() {
         <div>
           <h2 className="text-2xl font-bold text-gray-900">CSR Events</h2>
           <p className="text-gray-600">Browse all corporate social responsibility events</p>
-        </div>
-      </div>
-
-      {/* Filter tabs */}
-      <div className="mb-6 overflow-x-auto pb-2">
-        <div className="flex space-x-2">
-          {filterOptions.map(option => (
-            <button
-              key={option.id}
-              onClick={() => setActiveFilter(option.id)}
-              className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap ${
-                activeFilter === option.id
-                  ? 'bg-primary-600 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
-              }`}
-            >
-              {option.label}
-            </button>
-          ))}
         </div>
       </div>
 
@@ -78,15 +51,17 @@ function Dashboard() {
         <div className="bg-red-50 p-4 rounded-md">
           <p className="text-red-600">{error}</p>
         </div>
-      ) : filteredEvents.length > 0 ? (
+      ) : events.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredEvents.map(event => (
-            <EventCard key={event._id} event={event} />
+          {events.map(event => (
+            <Link key={event._id} to={`/events/${event._id}`}>
+              <EventCard event={event} />
+            </Link>
           ))}
         </div>
       ) : (
         <div className="bg-white p-8 rounded-lg text-center">
-          <p className="text-gray-600">No events found for the selected category.</p>
+          <p className="text-gray-600">No events found.</p>
         </div>
       )}
     </div>

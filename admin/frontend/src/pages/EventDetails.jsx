@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import { format } from 'date-fns'
 import CategoryBadge from '../components/CategoryBadge'
 import SubmissionCard from '../components/SubmissionCard'
-import { mockEvents } from '../data/mockData'
+import axios from 'axios'
 
 function EventDetails() {
   const { eventId } = useParams()
@@ -11,24 +11,22 @@ function EventDetails() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  // In a real app, this would fetch from an API
   useEffect(() => {
-    // Simulate API fetch
-    setTimeout(() => {
+    const fetchEvent = async () => {
       try {
-        const foundEvent = mockEvents.find(e => e._id === eventId)
-        if (foundEvent) {
-          setEvent(foundEvent)
-        } else {
-          setError('Event not found')
-        }
-        setLoading(false)
+        const res = await axios.get(`http://localhost:4000/api/admin/events/${eventId}`);
+        setEvent(res.data);
       } catch (err) {
-        setError('Failed to load event details')
-        setLoading(false)
+        setError('Failed to load event details');
+        console.error('Error fetching event:', err);
+      } finally {
+        setLoading(false);
       }
-    }, 800)
-  }, [eventId])
+    };
+  
+    fetchEvent();
+  }, [eventId]);
+  
 
   if (loading) {
     return (
