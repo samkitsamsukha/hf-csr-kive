@@ -1,172 +1,67 @@
-import PropTypes from 'prop-types';
-import { useState, useContext, useEffect } from 'react';
-import { 
-  Paper, 
-  Typography, 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableContainer, 
-  TableHead, 
-  TableRow,
-  Avatar,
-  Box,
-  Chip,
-  useTheme,
-  useMediaQuery
-} from '@mui/material';
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
-import { UserContext } from '../../context/UserContext';
-
-const Leaderboard = ({ leaderboard }) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const { user } = useContext(UserContext);
-  const [highlightedRow, setHighlightedRow] = useState(null);
-  
-  useEffect(() => {
-    // Find the current user in the leaderboard
-    const userPosition = leaderboard.findIndex(entry => entry.id === user.id);
-    if (userPosition !== -1) {
-      setHighlightedRow(userPosition);
-      
-      // Scroll to the user's position after a delay
-      setTimeout(() => {
-        const userRow = document.getElementById(`leaderboard-row-${userPosition}`);
-        if (userRow) {
-          userRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      }, 500);
-    }
-  }, [leaderboard, user.id]);
-
-  const getPositionColor = (position) => {
-    switch (position) {
-      case 1:
-        return '#FFD700'; // Gold
-      case 2:
-        return '#C0C0C0'; // Silver
-      case 3:
-        return '#CD7F32'; // Bronze
-      default:
-        return theme.palette.grey[300];
-    }
-  };
-  
+function Leaderboard({ leaderboard, userId }) {
   return (
-    <Paper elevation={2} sx={{ p: 3, borderRadius: 2 }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-        <EmojiEventsIcon sx={{ mr: 1, color: '#FFD700' }} />
-        <Typography variant="h5" sx={{ fontWeight: 'medium' }}>
-          CSR Leaderboard
-        </Typography>
-      </Box>
+    <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
+      <div className="bg-primary-500 text-white py-3 px-4">
+        <h3 className="text-lg font-semibold">CSR Leaderboard</h3>
+      </div>
       
-      <TableContainer sx={{ maxHeight: 400, overflowY: 'auto' }}>
-        <Table stickyHeader aria-label="leaderboard table">
-          <TableHead>
-            <TableRow>
-              <TableCell sx={{ fontWeight: 'bold' }}>Rank</TableCell>
-              <TableCell sx={{ fontWeight: 'bold' }}>Employee</TableCell>
-              {!isMobile && <TableCell sx={{ fontWeight: 'bold' }}>Events</TableCell>}
-              <TableCell align="right" sx={{ fontWeight: 'bold' }}>Coins</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {leaderboard.map((entry, index) => (
-              <TableRow 
-                key={entry.id}
-                id={`leaderboard-row-${index}`}
-                sx={{ 
-                  backgroundColor: entry.id === user.id ? theme.palette.primary.light + '40' : 'inherit',
-                  '&:hover': {
-                    backgroundColor: entry.id === user.id 
-                      ? theme.palette.primary.light + '60'
-                      : theme.palette.action.hover
-                  }
-                }}
-              >
-                <TableCell>
-                  <Box 
-                    sx={{ 
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      width: 28,
-                      height: 28,
-                      borderRadius: '50%',
-                      backgroundColor: getPositionColor(entry.position),
-                      color: entry.position <= 3 ? '#000' : '#fff',
-                      fontWeight: 'bold'
-                    }}
-                  >
-                    {entry.position}
-                  </Box>
-                </TableCell>
-                <TableCell>
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Avatar 
-                      sx={{ 
-                        width: 32, 
-                        height: 32, 
-                        mr: 1,
-                        backgroundColor: entry.id === user.id 
-                          ? theme.palette.primary.main
-                          : theme.palette.grey[400]
-                      }}
-                    >
-                      {entry.name.charAt(0)}
-                    </Avatar>
-                    <Box>
-                      <Typography variant="body2" sx={{ fontWeight: entry.id === user.id ? 'bold' : 'regular' }}>
-                        {entry.name}
-                        {entry.id === user.id && (
-                          <Chip 
-                            label="You" 
-                            size="small" 
-                            color="primary"
-                            sx={{ ml: 1, height: 20, fontSize: '0.6rem' }}
-                          />
+      <ul className="divide-y divide-gray-200 dark:divide-gray-700">
+        {leaderboard.map((person, index) => {
+          const isCurrentUser = person.id === userId
+          
+          return (
+            <li 
+              key={person.id}
+              className={`px-4 py-3 transition-colors ${
+                isCurrentUser 
+                  ? 'bg-primary-50 dark:bg-primary-900/20'
+                  : 'hover:bg-gray-50 dark:hover:bg-gray-750'
+              }`}
+            >
+              <div className="flex items-center">
+                <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-semibold ${
+                  index < 3 
+                    ? 'bg-accent-500 text-white'
+                    : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
+                }`}>
+                  {index + 1}
+                </div>
+                
+                <div className="ml-3 flex-1">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className={`text-sm font-medium ${
+                        isCurrentUser 
+                          ? 'text-primary-700 dark:text-primary-300'
+                          : 'text-gray-900 dark:text-white'
+                      }`}>
+                        {person.name}
+                        {isCurrentUser && (
+                          <span className="ml-2 text-xs px-2 py-0.5 bg-primary-100 dark:bg-primary-800 text-primary-700 dark:text-primary-300 rounded-full">
+                            You
+                          </span>
                         )}
-                      </Typography>
-                      {!isMobile && (
-                        <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.75rem' }}>
-                          {entry.organisation}
-                        </Typography>
-                      )}
-                    </Box>
-                  </Box>
-                </TableCell>
-                {!isMobile && (
-                  <TableCell>
-                    {entry.events}
-                  </TableCell>
-                )}
-                <TableCell align="right">
-                  <Typography fontWeight="bold" color="primary.main">
-                    {entry.totalCoins}
-                  </Typography>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Paper>
-  );
-};
+                      </p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        {person.eventsParticipated} events participated
+                      </p>
+                    </div>
+                    
+                    <div className="flex items-center text-accent-600">
+                      <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 1.18.898 2.043 1.84 2.725.41.298.814.575 1.161.835.363.274.674.54.84.798V13a1 1 0 102 0v-.528c.638-.301 1.093-.567 1.464-.957C13.905 10.65 14 9.833 14 9c0-1.18-.898-2.043-1.84-2.725A7.983 7.983 0 0011 5.092V5z" />
+                      </svg>
+                      <span className="font-semibold">{person.totalCoins}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          )
+        })}
+      </ul>
+    </div>
+  )
+}
 
-Leaderboard.propTypes = {
-  leaderboard: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      organisation: PropTypes.string.isRequired,
-      totalCoins: PropTypes.number.isRequired,
-      position: PropTypes.number.isRequired,
-      events: PropTypes.number.isRequired
-    })
-  ).isRequired
-};
-
-export default Leaderboard;
+export default Leaderboard
