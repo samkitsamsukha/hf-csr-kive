@@ -110,6 +110,10 @@ function Sidebar({ isOpen, isMobile, closeSidebar }) {
           </ul>
         </nav>
 
+        <div className='p-6'>
+          <button className='px-4 py-2 bg-black text-white rounded-md shadow-md'>Generate Audit</button>
+        </div>
+
         <div className="p-4 border-t border-gray-300">
           {data && <div className="text-sm text-black flex flex-col justify-center gap-3">
             <div className='flex items-center  gap-3'>

@@ -82,6 +82,9 @@ const ProfileEvents = ({ events }) => {
 												Report:{" "}
 												{firstSubmission?.eventReport || "No report submitted"}
 											</div>
+											<div>
+												<button className="px-2 py-1 rounded-sm shadow-md bg-black text-white text-sm my-2">Post to LinkedIn</button>
+											</div>
 										</div>
 									</div>
 								</div>
