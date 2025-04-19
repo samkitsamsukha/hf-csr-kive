@@ -62,9 +62,9 @@ function EmployeeDetails() {
         ← Back to Employees
       </Link>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="">
         {/* Employee details section */}
-        <div>
+        <div className='flex flex-row gap-12'>
           <div className="bg-white rounded-lg shadow-card overflow-hidden mb-6">
             <div className="p-6">
               <div className="flex items-center space-x-5 mb-4">
@@ -87,24 +87,30 @@ function EmployeeDetails() {
                   <p className="font-medium text-accent-600">{totalCoins}</p>
                 </div>
               </div>
-              
-              <div>
-                <h2 className="text-lg font-semibold text-gray-900 mb-2">Categories of Interest</h2>
-                <div className="flex flex-wrap gap-2">
-                  {employee.categories && employee.categories.length > 0 ? (
-                    employee.categories.map((category, index) => (
-                      <CategoryBadge key={index} category={category} />
-                    ))
-                  ) : (
-                    <p className="text-gray-500">No categories specified</p>
-                  )}
-                </div>
-              </div>
             </div>
           </div>
-          
-          {/* Participation history */}
-          <div className="bg-white rounded-lg shadow-card overflow-hidden">
+          <div className="bg-white rounded-lg shadow-card overflow-hidden mb-6 w-1/2">
+            <div className="p-6">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">Your Badges</h2>
+              {employee.events && employee.events.length > 0 ? (
+                <div className="flex flex-wrap gap-4">
+                  {Array.from(new Set(employee.events.map(event => event.eventCategory))).map((category, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-center w-20 h-20 bg-primary-100 text-primary-800 font-bold text-sm rounded-full shadow-md"
+                    >
+                      {category}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-gray-500">No badges earned yet</p>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="bg-white rounded-lg shadow-card overflow-hidden">
             <div className="p-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-4">Participation History</h2>
               
@@ -137,8 +143,6 @@ function EmployeeDetails() {
               )}
             </div>
           </div>
-        </div>
-      </div>
     </div>
   )
 }
