@@ -5,6 +5,7 @@ import CategoryBadge from '../components/CategoryBadge'
 import Leaderboard from '../components/Leaderboard'
 import { mockEmployees } from '../data/mockData'
 import axios from 'axios'
+import ProfileBadge from '../components/ProfileBadge'
 
 function EmployeeDetails() {
   const { employeeId } = useParams()
@@ -97,9 +98,9 @@ function EmployeeDetails() {
                   {Array.from(new Set(employee.events.map(event => event.eventCategory))).map((category, index) => (
                     <div
                       key={index}
-                      className="flex items-center justify-center w-20 h-20 bg-primary-100 text-primary-800 font-bold text-sm rounded-full shadow-md"
+                      className="flex items-center justify-center shadow-md rounded-md"
                     >
-                      {category}
+                      <ProfileBadge category={category} />
                     </div>
                   ))}
                 </div>

@@ -107,7 +107,7 @@ function Employees() {
 					)}
 				</div>
 				<div className="w-1/2">
-					<Leaderboard employees={mockEmployees} />
+					<Leaderboard employees={employees} />
 				</div>
 			</div>
 		</div>
