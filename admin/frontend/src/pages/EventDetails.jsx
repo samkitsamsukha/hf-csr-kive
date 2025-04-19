@@ -28,9 +28,9 @@ function EventDetails() {
       return url; // Return the original URL if it's not a valid GitHub link
     } catch (error) {
       console.error("Error converting GitHub URL:", error);
-      return url;
-    }
-  };
+      return url;
+    }
+  };
 
 
   useEffect(() => {
@@ -82,13 +82,13 @@ function EventDetails() {
       
       {/* Event header */}
       <div className="bg-white rounded-lg shadow-card overflow-hidden mb-6">
-        <div className="h-64 relative">
+        <div className="w-full h-fit relative">
           <img 
             src={convertToRawGitHubURL(event.eventImage) || 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'} 
             alt={event.eventName}
-            className="w-full h-full object-cover"
+            className="w-fit h-full object-cover"
           />
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/50 to-transparent"></div>
+          <div className="absolute top-0 left-0 w-full h-fit bg-gradient-to-t from-black/50 to-transparent"></div>
           <div className="absolute bottom-4 left-4">
             <CategoryBadge category={event.eventCategory} />
           </div>
