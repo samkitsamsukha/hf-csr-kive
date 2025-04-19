@@ -9,6 +9,7 @@ import {
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { generateAdminReport } from '../../generatePdf';
 
 
 function Sidebar({ isOpen, isMobile, closeSidebar }) {
@@ -38,6 +39,16 @@ function Sidebar({ isOpen, isMobile, closeSidebar }) {
       return url;
     }
   };
+
+  const [adminData, setAdminData] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:4000/api/admin")
+      .then((res) => res.json())
+      .then((data) => setAdminData(data))
+      .catch((err) => console.error("Fetch error:", err));
+  }, []);
+
 
   const [data, setData] = useState(null);
 
@@ -111,7 +122,7 @@ function Sidebar({ isOpen, isMobile, closeSidebar }) {
         </nav>
 
         <div className='p-6'>
-          <button className='px-4 py-2 bg-black text-white rounded-md shadow-md'>Generate Audit</button>
+          <button onClick={()=>generateAdminReport(adminData)} className='px-4 py-2 bg-black text-white rounded-md shadow-md'>Generate Audit</button>
         </div>
 
         <div className="p-4 border-t border-gray-300">
