@@ -4,30 +4,29 @@ import { format } from 'date-fns'
 import CategoryBadge from '../components/CategoryBadge'
 import Leaderboard from '../components/Leaderboard'
 import { mockEmployees } from '../data/mockData'
+import axios from 'axios'
 
 function EmployeeDetails() {
   const { employeeId } = useParams()
   const [employee, setEmployee] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-
-  // In a real app, this would fetch from an API
+  console.log(employeeId);
   useEffect(() => {
-    // Simulate API fetch
-    setTimeout(() => {
+    const fetchEmployeeDetails = async () => {
       try {
-        const foundEmployee = mockEmployees.find(e => e._id === employeeId)
-        if (foundEmployee) {
-          setEmployee(foundEmployee)
-        } else {
-          setError('Employee not found')
-        }
+        const empRes = await axios.get(`http://localhost:4000/api/admin/employees/${employeeId}`);
+        console.log(empRes.data)
+        setEmployee(empRes.data)
         setLoading(false)
       } catch (err) {
+        console.error(err)
         setError('Failed to load employee details')
         setLoading(false)
       }
-    }, 800)
+    }
+
+    fetchEmployeeDetails()
   }, [employeeId])
 
   if (loading) {
@@ -138,11 +137,6 @@ function EmployeeDetails() {
               )}
             </div>
           </div>
-        </div>
-        
-        {/* Leaderboard section */}
-        <div>
-          <Leaderboard employees={mockEmployees} />
         </div>
       </div>
     </div>
