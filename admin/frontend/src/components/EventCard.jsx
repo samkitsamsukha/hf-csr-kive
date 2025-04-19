@@ -5,6 +5,28 @@ import CategoryBadge from './CategoryBadge'
 function EventCard({ event }) {
   const { _id, eventName, eventDate, eventDescription, eventImage, eventLocation, eventCoins, eventCategory } = event
   
+  const convertToRawGitHubURL = (url) => {
+    try {
+      const githubPrefix = "https://github.com/";
+      const rawPrefix = "https://raw.githubusercontent.com/";
+  
+      if (url.startsWith(githubPrefix)) {
+        const parts = url.replace(githubPrefix, "").split("/");
+        if (parts.length >= 5 && parts[2] === "blob") {
+          const [username, repo, , branch, ...pathParts] = parts;
+          return `${rawPrefix}${username}/${repo}/${branch}/${pathParts.join(
+            "/"
+          )}`;
+        }
+      }
+      return url; // Return the original URL if it's not a valid GitHub link
+    } catch (error) {
+      console.error("Error converting GitHub URL:", error);
+      return url;
+    }
+  };
+
+
   return (
     <Link 
       to={`/events/${_id}`} 
@@ -16,7 +38,7 @@ function EventCard({ event }) {
             <CategoryBadge category={eventCategory} />
           </div>
           <img 
-            src={eventImage || 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'} 
+            src={convertToRawGitHubURL(eventImage) || 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'} 
             alt={eventName}
             className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
           />
