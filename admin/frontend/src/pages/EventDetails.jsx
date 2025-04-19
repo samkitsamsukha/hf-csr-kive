@@ -25,7 +25,7 @@ function EventDetails() {
           )}`;
         }
       }
-      return url; // Return the original URL if it's not a valid GitHub link
+      return url;
     } catch (error) {
       console.error("Error converting GitHub URL:", error);
       return url;
@@ -75,12 +75,10 @@ function EventDetails() {
 
   return (
     <div className="animate-fade-in">
-      {/* Back link */}
+
       <Link to="/" className="inline-flex items-center text-primary-700 hover:text-primary-800 mb-6">
         ← Back to Dashboard
       </Link>
-      
-      {/* Event header */}
       <div className="bg-white rounded-lg shadow-card overflow-hidden mb-6">
         <div className="w-full h-fit relative">
           <img 
@@ -119,8 +117,6 @@ function EventDetails() {
           </div>
         </div>
       </div>
-      
-      {/* Submissions section */}
       <div className="bg-white rounded-lg shadow-card p-6">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">
           Employee Submissions

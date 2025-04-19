@@ -18,7 +18,7 @@ function Header({ toggleSidebar, isSidebarOpen }) {
         </div>
         
         <div className="flex items-center gap-4">
-          {/* Right header content goes here - could include user profile, notifications, etc. */}
+          
         </div>
       </div>
     </header>
