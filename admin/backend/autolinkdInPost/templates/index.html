@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LinkedIn Event Poster</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    button {
+      margin-top: 1.5rem;
+      padding: 0.7rem 1.5rem;
+      background-color: #0077b5;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    #response {
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Post an Event to LinkedIn</h1>
+  <form id="linkedinForm">
+    <label>Event Name
+      <input type="text" id="eventName" required>
+    </label>
+
+    <label>Event Date
+      <input type="date" id="eventDate" required>
+    </label>
+
+    <label>Description
+      <textarea id="description" rows="4" required></textarea>
+    </label>
+
+    <label>Summary
+      <textarea id="summary" rows="2"></textarea>
+    </label>
+
+    <label>Hashtags (comma-separated)
+      <input type="text" id="hashtags">
+    </label>
+
+    <label>Upload Image
+      <input type="file" id="image" accept="image/*" required>
+    </label>
+
+    <button type="submit">Post to LinkedIn</button>
+  </form>
+
+  <div id="response"></div>
+
+  <script>
+    const form = document.getElementById('linkedinForm');
+    const responseDiv = document.getElementById('response');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const image = document.getElementById('image').files[0];
+      if (!image) {
+        alert('Please upload an image.');
+        return;
+      }
+
+      const caption = `
+        Event: ${document.getElementById('eventName').value}
+        Date: ${document.getElementById('eventDate').value}
+        Description: ${document.getElementById('description').value}
+        Summary: ${document.getElementById('summary').value}
+        Hashtags: ${document.getElementById('hashtags').value}
+      `;
+
+      const formData = new FormData();
+      formData.append('image', image);
+      formData.append('caption', caption);
+
+      try {
+        const res = await fetch('/post-to-linkedin', {
+          method: 'POST',
+          body: formData
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          responseDiv.innerText = `✅ Success: ${data.message}`;
+        } else {
+          responseDiv.innerText = `❌ Error: ${data.error}`;
+          console.error(data.details);
+        }
+      } catch (err) {
+        console.error('Request failed', err);
+        responseDiv.innerText = '❌ Network error while posting.';
+      }
+    });
+  </script>
+</body>
+</html>
