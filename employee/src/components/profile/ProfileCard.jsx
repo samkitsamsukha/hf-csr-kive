@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { EVENT_CATEGORIES } from '../../data/mockData';
+import ProfileBadge from '../../../../admin/frontend/src/components/ProfileBadge';
 
 const ProfileCard = ({ employee }) => {
 
@@ -46,24 +46,20 @@ const ProfileCard = ({ employee }) => {
             <dt className="text-sm font-medium text-gray-500">Interest Categories</dt>
             <dd className="mt-1 text-sm text-gray-900">
               <div className="flex flex-wrap gap-2">
-                {employee.categories && employee.categories.length > 0 ? (
-                  employee.categories.map(categoryId => {
-                    const category = EVENT_CATEGORIES.find(cat => cat.id === categoryId);
-                    const color = category ? category.color : 'primary';
-                    const name = category ? category.name : categoryId;
-                    
-                    return (
-                      <span 
-                        key={categoryId}
-                        className={`badge badge-${color}`}
-                      >
-                        {name}
-                      </span>
-                    );
-                  })
-                ) : (
-                  <span className="text-gray-500">No interests selected</span>
-                )}
+                {employee.events && employee.events.length > 0 ? (
+                                <div className="flex flex-wrap gap-4">
+                                  {Array.from(new Set(employee.events.map(event => event.eventCategory))).map((category, index) => (
+                                    <div
+                                      key={index}
+                                      className="flex items-center justify-center shadow-md rounded-md w-[125px] border-[0.25px] border-gray-700"
+                                    >
+                                      <ProfileBadge category={category} />
+                                    </div>
+                                  ))}
+                                </div>
+                              ) : (
+                                <p className="text-gray-500">No badges earned yet</p>
+                              )}
               </div>
             </dd>
           </div>
@@ -83,6 +79,7 @@ ProfileCard.propTypes = {
     events: PropTypes.arrayOf(
       PropTypes.shape({
         eventCoins: PropTypes.number.isRequired,
+        eventCategory: PropTypes.string.isRequired,
       })
     ).isRequired,
   }).isRequired,

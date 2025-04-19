@@ -5,7 +5,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 
 function CreateEvent() {
-
 	const navigate = useNavigate();
 	const [formData, setFormData] = useState({
 		eventName: "",
@@ -59,64 +58,64 @@ function CreateEvent() {
 	};
 
 	const handleSubmit = async (e) => {
-    e.preventDefault();
-  
-    const newErrors = {};
-    if (!formData.eventName.trim())
-      newErrors.eventName = "Event name is required";
-    if (!formData.eventDescription.trim())
-      newErrors.eventDescription = "Description is required";
-    if (!formData.eventLocation.trim())
-      newErrors.eventLocation = "Location is required";
-    if (!formData.eventCategory)
-      newErrors.eventCategory = "Category is required";
-    if (!formData.eventSummary.trim())
-      newErrors.eventSummary = "Summary is required";
-    if (!formData.eventImage.trim())
-      newErrors.eventImage = "Image URL is required";
-  
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
-  
-    setSubmitting(true);
-  
-    try {
-      const payload = {
-        adminId: "6802626ee952170c2291b435", // ✅ hardcoded admin ID
-        eventData: {
-          ...formData,
-          eventDate: formData.eventDate?.toISOString() || new Date().toISOString(), // ✅ make sure it's a valid ISO date string
-        },
-      };
-  
-      console.log("Sending payload:", payload);
-  
-      const response = await axios.post(
-        "http://localhost:4000/api/admin/events",
-        payload,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-  
-      console.log("Event created:", response.data);
-      navigate("/");
-    } catch (error) {
-      console.error("API error:", error);
-      setErrors({
-        submit:
-          error.response?.data?.message ||
-          "Failed to create event. Please try again.",
-      });
-    } finally {
-      setSubmitting(false);
-    }
-  };
-  
+		e.preventDefault();
+
+		const newErrors = {};
+		if (!formData.eventName.trim())
+			newErrors.eventName = "Event name is required";
+		if (!formData.eventDescription.trim())
+			newErrors.eventDescription = "Description is required";
+		if (!formData.eventLocation.trim())
+			newErrors.eventLocation = "Location is required";
+		if (!formData.eventCategory)
+			newErrors.eventCategory = "Category is required";
+		if (!formData.eventSummary.trim())
+			newErrors.eventSummary = "Summary is required";
+		if (!formData.eventImage.trim())
+			newErrors.eventImage = "Image URL is required";
+
+		if (Object.keys(newErrors).length > 0) {
+			setErrors(newErrors);
+			return;
+		}
+
+		setSubmitting(true);
+
+		try {
+			const payload = {
+				adminId: "6803cf5bf2d0c69d7f86622e", // ✅ hardcoded admin ID
+				eventData: {
+					...formData,
+					eventDate:
+						formData.eventDate?.toISOString() || new Date().toISOString(), // ✅ make sure it's a valid ISO date string
+				},
+			};
+
+			console.log("Sending payload:", payload);
+
+			const response = await axios.post(
+				"http://localhost:4000/api/admin/events",
+				payload,
+				{
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}
+			);
+
+			console.log("Event created:", response.data);
+			navigate("/");
+		} catch (error) {
+			console.error("API error:", error);
+			setErrors({
+				submit:
+					error.response?.data?.message ||
+					"Failed to create event. Please try again.",
+			});
+		} finally {
+			setSubmitting(false);
+		}
+	};
 
 	return (
 		<div className="animate-fade-in px-4 sm:px-8 lg:px-20 py-8">

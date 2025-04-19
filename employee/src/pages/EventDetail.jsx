@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { format } from 'date-fns';
-import { getEventById } from '../data/mockData';
 import { EVENT_CATEGORIES } from '../data/mockData';
 import ReportForm from '../components/events/ReportForm';
 import { motion, AnimatePresence } from 'framer-motion';
+import axios from 'axios';
 
 const EventDetail = () => {
   const { id } = useParams();
@@ -13,19 +13,39 @@ const EventDetail = () => {
   const [showReportForm, setShowReportForm] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
   
+  const convertToRawGitHubURL = (url) => {
+    try {
+      const githubPrefix = "https://github.com/";
+      const rawPrefix = "https://raw.githubusercontent.com/";
+  
+      if (url.startsWith(githubPrefix)) {
+        const parts = url.replace(githubPrefix, "").split("/");
+        if (parts.length >= 5 && parts[2] === "blob") {
+          const [username, repo, , branch, ...pathParts] = parts;
+          return `${rawPrefix}${username}/${repo}/${branch}/${pathParts.join(
+            "/"
+          )}`;
+        }
+      }
+      return url; // Return the original URL if it's not a valid GitHub link
+    } catch (error) {
+      console.error("Error converting GitHub URL:", error);
+      return url;
+    }
+  };
+
   useEffect(() => {
-    // Simulate API call to get event details
-    setIsLoading(true);
-    setTimeout(() => {
-      const foundEvent = getEventById(id);
-      setEvent(foundEvent);
-      
-      // Check if current user has already submitted a report
-      const userSubmission = foundEvent?.submissions.find(sub => sub.employeeId === '1');
-      setHasSubmitted(!!userSubmission);
-      
-      setIsLoading(false);
-    }, 800);
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`http://localhost:4000/api/admin/events/${id}`);
+        setEvent(res.data);
+        console.log(res.data)
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching event data:', error);
+      }
+    }
+    fetchData();
   }, [id]);
   
   // Handle report submission
@@ -84,7 +104,7 @@ const EventDetail = () => {
             </svg>
           </div>
           <h3 className="mt-2 text-sm font-medium text-gray-900">Event not found</h3>
-          <p className="mt-1 text-sm text-gray-500">The event you're looking for doesn't exist or has been removed.</p>
+          <p className="mt-1 text-sm text-gray-500">The event youre looking for doesnt exist or has been removed.</p>
           <div className="mt-6">
             <Link to="/events" className="btn-primary">
               Back to Events
@@ -97,6 +117,8 @@ const EventDetail = () => {
   
   const categoryColor = getCategoryColor(event.eventCategory);
   const isUpcoming = new Date(event.eventDate) >= new Date();
+
+  
   
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -115,7 +137,7 @@ const EventDetail = () => {
       <div className="relative rounded-lg overflow-hidden mb-6">
         <div className="absolute inset-0">
           <img 
-            src={event.eventImage} 
+            src={convertToRawGitHubURL(event.eventImage)} 
             alt={event.eventName} 
             className="w-full h-full object-cover"
           />

@@ -111,3 +111,12 @@ export const getSubmissionById = async (req, res) => {
       res.status(500).json({ error: err.message });
   }
 };
+
+export const getAdmin = async (req, res) => {
+  try {
+    const admin = await Admin.findOne();
+    res.json(admin);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}

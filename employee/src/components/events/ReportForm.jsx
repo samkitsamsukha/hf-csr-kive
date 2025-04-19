@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import PropTypes from 'prop-types';
 
 const ReportForm = ({ event, onSubmit, onClose }) => {
   const [formData, setFormData] = useState({
@@ -12,12 +13,30 @@ const ReportForm = ({ event, onSubmit, onClose }) => {
     picture: '',
   });
   
+  const convertToRawGitHubURL = (url) => {
+		try {
+			const githubPrefix = "https://github.com/";
+			const rawPrefix = "https://raw.githubusercontent.com/";
+
+			if (url.startsWith(githubPrefix)) {
+				const parts = url.replace(githubPrefix, "").split("/");
+				if (parts.length >= 5 && parts[2] === "blob") {
+					const [username, repo, , branch, ...pathParts] = parts;
+					return `${rawPrefix}${username}/${repo}/${branch}/${pathParts.join("/")}`;
+				}
+			}
+			return url;
+		} catch (error) {
+			console.error("Error converting GitHub URL:", error);
+			return url;
+		}
+	};
+
   const [imagePreview, setImagePreview] = useState('');
   
-  // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
+  
     // Validate form
     const newErrors = {};
     if (!formData.report.trim()) {
@@ -26,29 +45,61 @@ const ReportForm = ({ event, onSubmit, onClose }) => {
     if (!formData.picture.trim()) {
       newErrors.picture = 'Image URL is required';
     }
-    
+  
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
-    
-    // Submit form
-    onSubmit({
-      id: Date.now().toString(),
-      employeeId: '1', // Using the first employee from mock data
-      employeeName: 'John Doe',
+
+    const employeeId = '6802665e09c6db38baa6739b';
+    const employeeName = 'Samkit Samsukha';
+  
+    const payload = {
+      employeeId,
+      employeeName,
       report: formData.report,
       picture: formData.picture,
-      submissionDate: new Date(),
-    });
-    
-    // Reset form
-    setFormData({
-      report: '',
-      picture: '',
-    });
-    setImagePreview('');
+      eventId: event._id,
+    };
+  
+    try {
+      // Admin submission
+      await fetch(`http://localhost:4000/api/admin/events/${event._id}/submit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          employeeId,
+          employeeName,
+          report: formData.report,
+          picture: formData.picture,
+        }),
+      });
+      
+      console.log("payload for employee sub", payload)
+      // Employee submission
+      await fetch(`http://localhost:4000/api/employee/events/${event._id}/submit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+  
+      // Optionally show success message
+      alert("Report submitted successfully!");
+  
+      // Reset form
+      setFormData({ report: '', picture: '' });
+      setImagePreview('');
+      onClose(); // Close the modal
+  
+      // Optionally notify parent component
+      if (onSubmit) onSubmit(payload);
+  
+    } catch (error) {
+      console.error("Error submitting report:", error);
+      alert("Failed to submit report. Please try again later.");
+    }
   };
+  
   
   // Handle form input changes
   const handleChange = (e) => {
@@ -135,7 +186,7 @@ const ReportForm = ({ event, onSubmit, onClose }) => {
                     <p className="form-label">Image Preview</p>
                     <div className="mt-1 relative aspect-w-16 aspect-h-9 rounded-md overflow-hidden bg-gray-100">
                       <img 
-                        src={imagePreview} 
+                        src={convertToRawGitHubURL(imagePreview)} 
                         alt="Preview" 
                         className="object-cover w-full h-40"
                         onError={(e) => {
@@ -169,6 +220,14 @@ const ReportForm = ({ event, onSubmit, onClose }) => {
       </div>
     </AnimatePresence>
   );
+};
+ReportForm.propTypes = {
+  event: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    eventName: PropTypes.string,
+  }).isRequired,
+  onSubmit: PropTypes.func,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default ReportForm;

@@ -7,7 +7,8 @@ import {
 	getAllEmployees,
 	getEmployeeById,
 	createEmployee,
-	getSubmissionById
+	getSubmissionById,
+	getAdmin
 } from "../controllers/adminControllers.js";
 
 const router = express.Router();
@@ -20,5 +21,6 @@ router.get("/employees", getAllEmployees);
 router.get("/employees/:id", getEmployeeById);
 router.post("/create/employee", createEmployee);
 router.get("/submission/:submissionId", getSubmissionById);
+router.get("/", getAdmin);
 
 export default router;

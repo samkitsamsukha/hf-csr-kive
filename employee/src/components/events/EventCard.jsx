@@ -2,11 +2,31 @@ import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import { motion } from 'framer-motion';
 import { getCategoryColor } from '../../data/mockData';
+import PropTypes from 'prop-types';
 
 const EventCard = ({ event }) => {
   const categoryColor = getCategoryColor(event.eventCategory);
   const isUpcoming = new Date(event.eventDate) >= new Date();
+  const convertToRawGitHubURL = (url) => {
+    try {
+      const githubPrefix = "https://github.com/";
+      const rawPrefix = "https://raw.githubusercontent.com/";
   
+      if (url.startsWith(githubPrefix)) {
+        const parts = url.replace(githubPrefix, "").split("/");
+        if (parts.length >= 5 && parts[2] === "blob") {
+          const [username, repo, , branch, ...pathParts] = parts;
+          return `${rawPrefix}${username}/${repo}/${branch}/${pathParts.join(
+            "/"
+          )}`;
+        }
+      }
+      return url; // Return the original URL if it's not a valid GitHub link
+    } catch (error) {
+      console.error("Error converting GitHub URL:", error);
+      return url;
+    }
+  };
   // Convert category ID to display name
   const getCategoryName = (categoryId) => {
     return categoryId.split('_').map(word => 
@@ -21,12 +41,12 @@ const EventCard = ({ event }) => {
       className="h-full"
     >
       <Link 
-        to={`/events/${event.id}`} 
+        to={`/events/${event._id}`} 
         className="block h-full card group"
       >
         <div className="aspect-w-16 aspect-h-9 w-full overflow-hidden rounded-t-lg">
           <img 
-            src={event.eventImage} 
+            src={convertToRawGitHubURL(event.eventImage)} 
             alt={event.eventName}
             className="w-full h-48 object-cover transform transition-transform duration-500 group-hover:scale-110"
           />
@@ -79,6 +99,18 @@ const EventCard = ({ event }) => {
       </Link>
     </motion.div>
   );
+};
+EventCard.propTypes = {
+  event: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    eventImage: PropTypes.string.isRequired,
+    eventName: PropTypes.string.isRequired,
+    eventDate: PropTypes.string.isRequired,
+    eventDescription: PropTypes.string.isRequired,
+    eventCategory: PropTypes.string.isRequired,
+    eventLocation: PropTypes.string.isRequired,
+    eventCoins: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 export default EventCard;
